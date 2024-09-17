@@ -22,7 +22,39 @@ var pool  = mysql.createPool({
   database        : process.env.DBNAME
 });
 
-app.listen(port, () => {
-    //console.log(process.env) ;
-    console.log(`A masinéria megfigyel itten e: ${port}...`);
+
+
+app.post('/login', (req, res)=>{
+
+  if (!req.body.email || !req.body.passwd) {
+    res.status(203).send("Hiányzó adatok");
+    return;
+  }
+
+  pool.query(`SELECT ID, name, email, role, status, phone FROM users WHERE email='${req.body.email}' AND password='${req.body.passwd}'`, (err,results)=>{
+
+    if (err) {
+      res.status(500).send("Hiba van az adatbázisban");
+      return;
+    }
+    if (results.length == 0) {
+      res.status(203).send("Rossz belépési adatok");
+      return;
+    }
+
+    res.status(202).send(results);
+    return;
+
   });
+
+
+})
+
+
+
+
+
+app.listen(port, () => {
+  //console.log(process.env) ;
+  console.log(`A masinéria megfigyel itten e: ${port}...`);
+});
