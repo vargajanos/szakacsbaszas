@@ -1,0 +1,10 @@
+header{
+    text-align: center;
+    font-size: 300%;
+    padding: 2rem;
+}
+footer{
+    text-align: center;
+    padding-top: 1rem;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
