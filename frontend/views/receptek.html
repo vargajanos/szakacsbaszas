@@ -90,4 +90,70 @@
             </div>
           </div>
       </div>
+
+      <div id="floating-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <p class="plus">+</p>
+      </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Új recept feltöltése</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="title" placeholder="Recept neve">
+          <label for="title">Recept neve</label>
+        </div>
+        
+        <div class="form-floating mb-3 d-flex">
+          <ul class="list-group list-group-horizontal" id="selectedCategoryList">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+          </ul>
+
+          <div class="dropdown ms-auto">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Kategória hozzáadása
+            </button>
+            <ul class="dropdown-menu" id="categoryList">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="additions" placeholder="Hozzávalók">
+          <label for="additions">Hozzávalók</label>
+        </div>
+        <div class="form-floating mb-3">
+          <textarea  type="text" class="form-control" id="description" placeholder="Recept elkésítése" style="height: 100px"></textarea>
+          <label for="description">Recept elkésítése</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="time" placeholder="Elkésítési idő">
+          <label for="time">Elkésítési idő</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="calory" placeholder="Kalória">
+          <label for="calory">Kalória</label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+        <button type="button" class="btn btn-primary">Feltöltés</button>
+      </div>
+    </div>
+  </div>
 </div>
