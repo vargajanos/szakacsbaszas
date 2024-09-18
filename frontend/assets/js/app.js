@@ -1,5 +1,4 @@
 const serverUrl = 'http://localhost:3000';
-var CryptoJS = require("crypto-js");
 
 let loggedUser = null;
 
@@ -9,4 +8,27 @@ async function render(view){
  
     switch(view){
     }
+}
+
+function renderNavItems(){
+    let lgdOut = document.querySelectorAll('.lgdOut');
+    let lgdIn = document.querySelectorAll('.lgdIn');
+
+    //nincs belepve
+    if (loggedUser == null) {
+        lgdIn.forEach(item=>{
+            item.classList.add('d-none');
+        })
+        lgdOut.forEach(item=>{
+            item.classList.remove('d-none');
+        })
+        return;    
+    }
+
+    lgdIn.forEach(item=>{
+        item.classList.remove('d-none');
+    })
+    lgdOut.forEach(item=>{
+        item.classList.add('d-none');
+    })
 }
