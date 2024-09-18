@@ -43,15 +43,6 @@ function renderNavItems(){
         })
         return;    
     }
-
-    //admin
-    if (loggedUser.role == 'admin'){
-        lgdAdmIn.forEach(item => {
-            item.classList.remove('d-none');
-        });
-    }
-
-
     //user
     lgdIn.forEach(item=>{
         item.classList.remove('d-none');
@@ -59,5 +50,19 @@ function renderNavItems(){
     lgdOut.forEach(item=>{
         item.classList.add('d-none');
     })
+    lgdAdmIn.forEach(item => {
+        item.classList.add('d-none');
+    });
+    
+    //admin
+    if (loggedUser[0].role == 'admin'){
+        lgdAdmIn.forEach(item => {
+            item.classList.remove('d-none');
+        });
+        console.log(loggedUser)
+        
+    }
+
+
 }
 renderNavItems();
