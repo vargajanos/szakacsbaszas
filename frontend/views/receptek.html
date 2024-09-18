@@ -138,21 +138,21 @@
         </div>
         <div class="form-floating mb-3">
           <textarea  type="text" class="form-control" id="description" placeholder="Recept elkésítése" style="height: 100px"></textarea>
-          <label for="description">Recept elkésítése</label>
+          <label for="description">Recept elkészítése</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="time" placeholder="Elkésítési idő">
-          <label for="time">Elkésítési idő</label>
+          <label for="time">Elkészítési idő</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="calory" placeholder="Kalória">
+          <input type="number" class="form-control" id="calory"  min="0" placeholder="Kalória">
           <label for="calory">Kalória</label>
         </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-        <button type="button" class="btn btn-primary">Feltöltés</button>
+        <button type="button" class="btn btn-primary" onclick="addRecipe()">Feltöltés</button>
       </div>
     </div>
   </div>

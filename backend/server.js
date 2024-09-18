@@ -116,6 +116,23 @@ app.post('/recipe', (req, res)=>{
   });
 })
 
+app.get('/recipe', (req,res)=>{
+  
+  //select
+  pool.query(`SELECT name, email, role, phone FROM users WHERE ID='${req.params.id}'`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatbázisban");
+      return;
+    }
+    if (results.length == 0) {
+      res.status(203).send("Hibás azonosító");
+      return;
+    }
+
+    res.status(202).send(results);
+    return;
+  })
+})
 
 //Én lekérdezése
 app.get('/me/:id', (req,res)=>{
