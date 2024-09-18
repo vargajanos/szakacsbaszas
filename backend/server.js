@@ -97,8 +97,56 @@ app.post('/login', (req, res)=>{
 
 })
 
+//Én lekérdezése
+app.get('/me/:id', (req,res)=>{
+  if (!req.params.id) {
+    res.status(203).send("Hiányzó azonosító");
+    return;
+  }
 
+  pool.query(`SELECT name, email, role, phone FROM users WHERE ID='${req.params.id}'`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatbázisban");
+      return;
+    }
+    if (results.length == 0) {
+      res.status(203).send("Hibás azonosító");
+      return;
+    }
 
+    res.status(202).send(results);
+    return;
+  })
+})
+
+//Én módosítása
+app.patch('/users/:id', (req,res)=>{
+
+  if (!req.params.id) {
+    res.status(203).send("Hiányzó azonosító");
+    return;
+  }
+
+  if (!req.body.name || !req.body.email) {
+    res.status(203).send("Hiányzó adatok");
+    return;
+  }
+  
+  pool.query(`UPDATE users SET name='${req.body.name}', email='${req.body.email}', role='${req.body.role}', phone='${req.body.phone}' WHERE ID='${req.params.id}'`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatbáisban");
+      return;
+    }
+    if (results.affectedRows == 0) {
+      res.status(203).send("Hibás azonosító");
+      return;
+    }
+
+    res.status(200).send("Én módosítva");
+    return;
+
+  })
+})
 
 
 app.listen(port, () => {
