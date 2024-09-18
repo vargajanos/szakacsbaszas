@@ -211,6 +211,21 @@ app.post('/categorys', (req, res)=>{
 
 })
 
+//kategoria lekeres
+app.get('/categorys', (req,res)=>{
+
+  pool.query(`SELECT * FROM categorys`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatabázisban");
+      return;
+    }
+
+    res.status(200).send(results);
+    return;
+
+  })
+})
+
 app.listen(port, () => {
   //console.log(process.env) ;
   console.log(`A masinéria megfigyel itten e: ${port}...`);

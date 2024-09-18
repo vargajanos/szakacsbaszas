@@ -11,6 +11,7 @@ async function render(view){
             getEn();
             break;
         }
+        
     }
 
 
@@ -53,13 +54,12 @@ function renderNavItems(){
     lgdAdmIn.forEach(item => {
         item.classList.add('d-none');
     });
-    
+
     //admin
     if (loggedUser[0].role == 'admin'){
         lgdAdmIn.forEach(item => {
             item.classList.remove('d-none');
         });
-        console.log(loggedUser)
         
     }
 

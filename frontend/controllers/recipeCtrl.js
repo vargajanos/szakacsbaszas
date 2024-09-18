@@ -1,3 +1,6 @@
+let kategoriak = [];
+let selectedkategoriak = [];
+
 function addRecipe(){
     let newRecipe={
         userID: loggedUser[0].ID,
@@ -19,4 +22,69 @@ function addRecipe(){
             document.querySelector('#calory').value = null
         }
     })
+}
+
+
+function katFelvetel(){
+    let data ={
+        name:document.querySelector('#kat').value
+    }
+
+    axios.post(`${serverUrl}/categorys`, data).then(res=>{
+
+        alert(res.data)
+    })
+
+    katLekeres();
+}
+
+function katLekeres(){
+
+    axios.get(`${serverUrl}/categorys`).then(res=>{
+        kategoriak = res.data;
+        katFeltoltes()
+    })
+    
+}
+
+function katFeltoltes(){
+    
+    let categoryList = document.querySelector('#categoryList')
+    categoryList.innerHTML = "";
+
+    kategoriak.forEach(item => {
+        let li = document.createElement('li')
+        li.innerHTML = item.name
+        li.classList.add("dropdown-item")    
+        li.onclick = function () {hozzaad(item)};
+
+        categoryList.appendChild(li)
+    });
+}
+
+function hozzaad(item){
+
+    if ((selectedkategoriak.find((ize) => item.ID == ize.ID)) != null) {
+        selectedkategoriak.splice(selectedkategoriak.indexOf(selectedkategoriak.find((ize) => item.ID == ize.ID)),1)
+    }
+    else{
+        selectedkategoriak.push(item)
+    }    
+    kategoriadropdown();
+
+}
+function kategoriadropdown(){
+
+
+    let selectedCategoryList = document.querySelector('#selectedCategoryList');
+    selectedCategoryList.innerHTML = "";
+
+    selectedkategoriak.forEach(i =>{
+        let li = document.createElement('li')
+        li.innerHTML = i.name
+        li.classList.add("list-group-item")   
+    
+        selectedCategoryList.appendChild(li)
+    })  
+
 }
