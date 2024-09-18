@@ -65,14 +65,6 @@ app.post("/reg", (req, res) => {
 })
 
 
-app.listen(port, () => {
-    //console.log(process.env) ;
-    console.log(`A masinéria megfigyel itten e: ${port}...`);
-  });
-
-
-
-
 app.post('/login', (req, res)=>{
 
   if (!req.body.email || !req.body.passwd) {
