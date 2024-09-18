@@ -22,7 +22,7 @@ var pool  = mysql.createPool({
   database        : process.env.DBNAME
 });
 
-
+// Regisztráció
 app.post("/reg", (req, res) => {
 
   // Minden szükséges adat megvan-e?
@@ -57,7 +57,7 @@ app.post("/reg", (req, res) => {
     }
     
     // új felhasználó felvétele
-    pool.query(`INSERT INTO users VALUES('${uuid.v4()}', '${req.body.name}', '${req.body.email}', SHA1('${req.body.passwd}'), 'user', '0', '')`, (err, results)=>{
+    pool.query(`INSERT INTO users VALUES('${uuid.v4()}', '${req.body.name}', '${req.body.email}', SHA1('${req.body.passwd}'), 'user', '0', '${req.body.phone}')`, (err, results)=>{
       if (err){
         res.status(500).send('Hiba történt az adatbázis művelet közben!');
         return;

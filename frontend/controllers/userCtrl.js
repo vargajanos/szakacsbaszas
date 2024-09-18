@@ -21,27 +21,22 @@ function login(){
 
 function registration(){
     let newUser={
+        name: document.querySelector('#name').value,
         email: document.querySelector('#email').value,
-        passwd: document.querySelector('#passwd').value
+        passwd: document.querySelector('#passwd').value,
+        confirm: document.querySelector('#confirm').value,
+        phone: document.querySelector('#phone').value
     }
 
-    axios.post(`${serverUrl}/login`, newUser).then(res=>{
+    console.log(newUser)
 
-        if (res.status != 202) {
-            alert(res.data);
-            return;
-        }
-
-        loggedUser = res.data;
-        
-
-
-
+    axios.post(`${serverUrl}/reg`, newUser).then(res=>{
+        alert(res.data);       
     })
 }
 
 function logout(){
-    localStorage.removeItem('stepcounter');
+    localStorage.removeItem('szakacs');
     loggedUser = null;
     renderNavItems();
     render('login');
