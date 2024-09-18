@@ -119,11 +119,12 @@ app.post('/recipe', (req, res)=>{
 
 //Én lekérdezése
 app.get('/me/:id', (req,res)=>{
+  //vizsgálat
   if (!req.params.id) {
     res.status(203).send("Hiányzó azonosító");
     return;
   }
-
+  //select
   pool.query(`SELECT name, email, role, phone FROM users WHERE ID='${req.params.id}'`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatbázisban");
@@ -142,6 +143,7 @@ app.get('/me/:id', (req,res)=>{
 //Én módosítása
 app.patch('/users/:id', (req,res)=>{
 
+  //vizsgálatok
   if (!req.params.id) {
     res.status(203).send("Hiányzó azonosító");
     return;
@@ -151,7 +153,7 @@ app.patch('/users/:id', (req,res)=>{
     res.status(203).send("Hiányzó adatok");
     return;
   }
-  
+  //update
   pool.query(`UPDATE users SET name='${req.body.name}', email='${req.body.email}', role='${req.body.role}', phone='${req.body.phone}' WHERE ID='${req.params.id}'`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatbáisban");
@@ -168,6 +170,29 @@ app.patch('/users/:id', (req,res)=>{
   })
 })
 
+
+//kategoria felvetel
+app.post('/categorys', (req, res)=>{
+  //szükséges érték vizsgálat
+  if (!req.body.name) {
+    res.status(203).send("Hiányzó adatok");
+    return;
+  }
+
+  //felvétel
+  pool.query(`INSERT INTO categorys VALUES ('${uuid.v4()}', '${req.body.name}')`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatbázisban");
+      return;
+    }
+
+    res.status(200).send("Kategória rögzítve");
+    return;
+
+  })
+
+
+})
 
 app.listen(port, () => {
   //console.log(process.env) ;

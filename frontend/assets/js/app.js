@@ -27,10 +27,15 @@ if (localStorage.getItem('szakacs')){
 function renderNavItems(){
     let lgdOut = document.querySelectorAll('.lgdOut');
     let lgdIn = document.querySelectorAll('.lgdIn');
+    let lgdAdmIn = document.querySelectorAll('.lgdAdmIn');
+
 
     //nincs belepve
     if (loggedUser == null) {
         lgdIn.forEach(item=>{
+            item.classList.add('d-none');
+        })
+        lgdAdmIn.forEach(item=>{
             item.classList.add('d-none');
         })
         lgdOut.forEach(item=>{
@@ -39,6 +44,15 @@ function renderNavItems(){
         return;    
     }
 
+    //admin
+    if (loggedUser.role == 'admin'){
+        lgdAdmIn.forEach(item => {
+            item.classList.remove('d-none');
+        });
+    }
+
+
+    //user
     lgdIn.forEach(item=>{
         item.classList.remove('d-none');
     })
