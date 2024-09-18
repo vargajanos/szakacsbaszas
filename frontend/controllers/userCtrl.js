@@ -12,7 +12,7 @@ function login(){
         }
 
         loggedUser = res.data;
-        localStorage.setItem('szakacs', JSON.stringify(loggedUser));
+        localStorage.setItem('szakacs', JSON.stringify(loggedUser));;
         renderNavItems();
         render('receptek');
 
@@ -38,4 +38,10 @@ function registration(){
             document.querySelector('#phone').value = null
         }
     })
+}
+function logout(){
+    localStorage.removeItem('szakacs');
+    loggedUser = null;
+    renderNavItems();
+    render('login');
 }

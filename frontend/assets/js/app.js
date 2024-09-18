@@ -8,6 +8,16 @@ async function render(view){
  
     switch(view){
     }
+
+
+}
+
+
+if (localStorage.getItem('szakacs')){
+    loggedUser = JSON.parse(localStorage.getItem('szakacs'));
+    render('receptek');
+}else{
+    render('login');
 }
 
 function renderNavItems(){
@@ -32,3 +42,4 @@ function renderNavItems(){
         item.classList.add('d-none');
     })
 }
+renderNavItems();
