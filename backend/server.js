@@ -70,7 +70,7 @@ app.post("/reg", (req, res) => {
 
 })
 
-
+// login
 app.post('/login', (req, res)=>{
 
   if (!req.body.email || !req.body.passwd) {
@@ -78,7 +78,7 @@ app.post('/login', (req, res)=>{
     return;
   }
 
-  pool.query(`SELECT ID, name, email, role, status, phone FROM users WHERE email='${req.body.email}' AND password='${req.body.passwd}'`, (err,results)=>{
+  pool.query(`SELECT ID, name, email, role, status, phone FROM users WHERE email='${req.body.email}' AND password='${CryptoJS.SHA1(req.body.passwd)}'`, (err,results)=>{
 
     if (err) {
       res.status(500).send("Hiba van az adatbázisban");

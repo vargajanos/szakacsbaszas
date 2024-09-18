@@ -14,7 +14,7 @@ function login(){
         loggedUser = res.data;
         localStorage.setItem('szakacs', JSON.stringify(loggedUser));
 
-
+        
 
     })
 }

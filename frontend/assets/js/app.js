@@ -1,4 +1,5 @@
 const serverUrl = 'http://localhost:3000';
+var CryptoJS = require("crypto-js");
 
 let loggedUser = null;
 
