@@ -11,10 +11,14 @@ async function render(view){
             getEn();
             break;
         }
+<<<<<<< HEAD
         case "receptek":{
             getRecipes();
             break;
         }
+=======
+        
+>>>>>>> e6a84a952e3c3483b61bbd933b713bfc06ca7844
     }
 
 
@@ -57,13 +61,12 @@ function renderNavItems(){
     lgdAdmIn.forEach(item => {
         item.classList.add('d-none');
     });
-    
+
     //admin
     if (loggedUser[0].role == 'admin'){
         lgdAdmIn.forEach(item => {
             item.classList.remove('d-none');
         });
-        console.log(loggedUser)
         
     }
 

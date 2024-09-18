@@ -68,14 +68,3 @@ function updateEn(){
     });
 }
 
-function katFelvetel(){
-    let data ={
-        name:document.querySelector('#kat').value
-    }
-
-    axios.post(`${serverUrl}/categorys`, data).then(res=>{
-
-        alert(res.data)
-    })
-
-}
