@@ -93,9 +93,29 @@ app.post('/login', (req, res)=>{
     return;
 
   });
-
-
 })
+
+// recept felvétele
+app.post('/recipe', (req, res)=>{
+
+  // szükséges értékek vizsgálata
+  if (!req.body.title || !req.body.userID || !req.body.additions || !req.body.description || !req.body.time || !req.body.calory) {
+    res.status(203).send("Hiányzó adatok");
+    return;
+  }
+
+  // felvétel
+  pool.query(`INSERT INTO recipes VALUES ('${uuid.v4()}', '${req.body.userID}', '${req.body.title}', '${req.body.additions}', '${req.body.description}', '${req.body.time}', ${req.body.calory})`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatbázisban");
+      return;
+    }
+    
+    res.status(200).send("A recept rögzítve lett");
+    return;
+  });
+})
+
 
 //Én lekérdezése
 app.get('/me/:id', (req,res)=>{
