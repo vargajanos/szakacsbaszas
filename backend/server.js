@@ -103,9 +103,9 @@ app.post('/recipe', (req, res)=>{
     res.status(203).send("Hiányzó adatok");
     return;
   }
-
+  let recipeID = uuid.v4();
   // felvétel
-  pool.query(`INSERT INTO recipes VALUES ('${uuid.v4()}', '${req.body.userID}', '${req.body.title}', '${req.body.additions}', '${req.body.description}', '${req.body.time}', ${req.body.calory})`, (err,results)=>{
+  pool.query(`INSERT INTO recipes VALUES ('${recipeID}', '${req.body.userID}', '${req.body.title}', '${req.body.additions}', '${req.body.description}', '${req.body.time}', ${req.body.calory})`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatbázisban");
       return;
@@ -116,19 +116,15 @@ app.post('/recipe', (req, res)=>{
   });
 })
 
-app.get('/recipe', (req,res)=>{
-  
+app.get('/recipes', (req,res)=>{
+
   //select
-  pool.query(`SELECT name, email, role, phone FROM users WHERE ID='${req.params.id}'`, (err,results)=>{
+  pool.query(`SELECT * FROM recipes`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatbázisban");
       return;
     }
-    if (results.length == 0) {
-      res.status(203).send("Hibás azonosító");
-      return;
-    }
-
+    
     res.status(202).send(results);
     return;
   })

@@ -11,6 +11,10 @@ async function render(view){
             getEn();
             break;
         }
+        case "receptek":{
+            getRecipes();
+            break;
+        }
     }
 
 
