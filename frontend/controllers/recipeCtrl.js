@@ -122,8 +122,17 @@ function loadRecipes(){
         accordion_div.classList.add("accordion")
         
         hozzavalok_div = document.createElement("div")
-        // ezt folytatni kell :,,(
-        // receptek 9. sornál tartok
+        hozzavalok_div.classList.add("accordion-item")
+
+        hozzavalok_h2 = document.createElement("h2")
+        hozzavalok_h2.classList.add("accordion-header")
+
+        hozzavalok_btn = document.createElement("button")
+        hozzavalok_btn.classList("accordion-button")
+        hozzavalok_btn.innerHTML = "Hozzávalók"
+
+        hozzavalok_liras = docment.createElement("div")
+        hozzavalok_liras.classList.add("accordion-collapse","collapse show")
     });
     
 
