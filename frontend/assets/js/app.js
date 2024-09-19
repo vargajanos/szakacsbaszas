@@ -11,14 +11,11 @@ async function render(view){
             getEn();
             break;
         }
-<<<<<<< HEAD
+
         case "receptek":{
             getRecipes();
             break;
         }
-=======
-        
->>>>>>> e6a84a952e3c3483b61bbd933b713bfc06ca7844
     }
 
 
