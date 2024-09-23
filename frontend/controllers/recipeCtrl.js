@@ -115,15 +115,15 @@ function kategoriadropdown(){
 function getRecipes(){
     axios.get(`${serverUrl}/recipes`).then(res=>{
         recipes = res.data
-        loadRecipes()
+        loadRecipes(recipes)
     })
 }
 
-function loadRecipes(){
+function loadRecipes(receptekLista){
     let receptek = document.querySelector("#receptek")
     receptek.innerHTML = ""
     
-    recipes.forEach(recipe => {
+    receptekLista.forEach(recipe => {
         let card_div = document.createElement("div")
         card_div.classList.add("card")
 
