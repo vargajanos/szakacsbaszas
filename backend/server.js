@@ -99,7 +99,7 @@ app.post('/login', (req, res)=>{
 app.post('/recipe', (req, res)=>{
 
   // szükséges értékek vizsgálata
-  if (!req.body.title || !req.body.userID || !req.body.additions || !req.body.description || !req.body.time || !req.body.calory) {
+  if (!req.body.title || !req.body.userID || !req.body.additions || !req.body.description || !req.body.time || !req.body.calory || req.body.category.length == 0) {
     res.status(203).send("Hiányzó adatok");
     return;
   }
@@ -110,10 +110,24 @@ app.post('/recipe', (req, res)=>{
       res.status(500).send("Hiba van az adatbázisban");
       return;
     }
-    
+
+    //kategoria felvetel
+    req.body.category.forEach(elem => {
+      pool.query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${recipeID}', '${elem.ID}')`, (err,results)=>{
+        if (err) {
+          res.status(500).send("Hiba van az adatbázisban");
+          return;
+        }  
+      });
+    })
+
+
     res.status(200).send("A recept rögzítve lett");
     return;
   });
+
+
+
 })
 
 app.get('/recipes', (req,res)=>{
@@ -191,6 +205,7 @@ app.post('/categorys', (req, res)=>{
     res.status(203).send("Hiányzó adatok");
     return;
   }
+  
 
   //felvétel
   pool.query(`INSERT INTO categorys VALUES ('${uuid.v4()}', '${req.body.name}')`, (err,results)=>{
@@ -201,8 +216,9 @@ app.post('/categorys', (req, res)=>{
 
     res.status(200).send("Kategória rögzítve");
     return;
-
   })
+
+
 
 
 })
