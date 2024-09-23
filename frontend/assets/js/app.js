@@ -18,6 +18,7 @@ async function render(view){
 
             }
             getRecipes();
+            katLekeres();
         }
         
     }

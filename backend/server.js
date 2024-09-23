@@ -130,6 +130,7 @@ app.post('/recipe', (req, res)=>{
 
 })
 
+//recept lekérdezése
 app.get('/recipes', (req,res)=>{
 
   //select
@@ -143,6 +144,28 @@ app.get('/recipes', (req,res)=>{
     return;
   })
 })
+
+//egy recept milyen kategoria
+app.get('/recipes/:id', (req,res)=>{
+  if (!req.params.id) {
+    res.status(203).send("Rossz azonosító");
+    return;
+  }
+  pool.query(`SELECT * from categorys WHERE ID='(SELECT catID from cat_kapcs WHERE recipeID='${req.params.id})'`, (err, results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatbázisban");
+      return;
+    }
+
+    res.status(202).send(results);
+    return;
+  })
+
+
+
+})
+
+
 
 //Én lekérdezése
 app.get('/me/:id', (req,res)=>{
