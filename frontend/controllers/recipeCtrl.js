@@ -25,11 +25,10 @@ function addRecipe(){
             document.querySelector('#time').value = null
             document.querySelector('#calory').value = null
             document.querySelector('#selectedCategoryList').innerHTML = ""
-            selectedkategoriak = null
-
-            getRecipes()
+            selectedkategoriak.clear()
         }
     })
+    getRecipes()
 }
 
 
@@ -109,7 +108,7 @@ function loadRecipes(){
     receptek.innerHTML = ""
     
     recipes.forEach(recipe => {
-        console.log(recipe)
+        
         let card_div = document.createElement("div")
         card_div.classList.add("card")
 
