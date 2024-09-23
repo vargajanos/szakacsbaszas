@@ -2,6 +2,7 @@ let recipes = [];
 
 let kategoriak = [];
 let selectedkategoriak = [];
+let filterselectedkategoriak = [];
 
 function addRecipe(){
     let newRecipe={
@@ -14,7 +15,7 @@ function addRecipe(){
         category: selectedkategoriak
     }
    
-
+    
     axios.post(`${serverUrl}/recipe`, newRecipe).then(res=>{
         alert(res.data);
         
@@ -31,21 +32,23 @@ function addRecipe(){
     getRecipes()
 }
 
-function myFunction() {
+function searchbar() {
     // Declare variables
-    var input, filter, ul, li, a, i, txtValue;
+    var input, filter, a;
     input = document.getElementById('myInput');
-    filter = input.value;
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName('li');
-  
-    
-    // Loop through all list items, and hide those who don't match the search query
-    for (i = 0; i < recipes.length; i++) {
-      if (recipes[i].title.contains(filter)) {
+    filter = input.value.toUpperCase();
+    cards = document.getElementsByClassName("card")
+    titles = document.getElementsByClassName("card-title");
         
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < cards.length; i++) {
+        a = titles[i];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          cards[i].style.display = "";
+        } else {
+          cards[i].style.display = "none";
+        }
       }
-    }
   }
 
 function katFelvetel(){
@@ -66,8 +69,24 @@ function katLekeres(){
     axios.get(`${serverUrl}/categorys`).then(res=>{
         kategoriak = res.data;
         katFeltoltes()
+        katFilter()
     })
     
+}
+
+function katFilter(){
+    let filterCategoryList = document.querySelector('#filterCategoryList')
+    filterCategoryList.innerHTML = "";
+
+    kategoriak.forEach(item => {
+        let li = document.createElement('li')
+        li.innerHTML = item.name
+        li.classList.add("dropdown-item")    
+        li.onclick = function () {filterhozzaad(item)};
+        filterCategoryList.appendChild(li)
+    });
+
+
 }
 
 function katFeltoltes(){
@@ -96,6 +115,17 @@ function hozzaad(item){
     kategoriadropdown();
 
 }
+function filterhozzaad(item){
+
+    if ((filterselectedkategoriak.find((ize) => item.ID == ize.ID)) != null) {
+        filterselectedkategoriak.splice(filterselectedkategoriak.indexOf(filterselectedkategoriak.find((ize) => item.ID == ize.ID)),1)
+    }
+    else{
+        filterselectedkategoriak.push(item)
+    }
+    filterkategoriadropdown();
+
+}
 function kategoriadropdown(){
 
 
@@ -111,6 +141,22 @@ function kategoriadropdown(){
     })  
 
 }
+function filterkategoriadropdown(){
+
+
+    let filterSelectedCategoryList = document.querySelector('#filterSelectedCategoryList');
+    filterSelectedCategoryList.innerHTML = "";
+
+    filterselectedkategoriak.forEach(i =>{
+        let li = document.createElement('li')
+        li.innerHTML = i.name
+        li.classList.add("list-group-item")   
+    
+        filterSelectedCategoryList.appendChild(li)
+    })  
+
+}
+
 
 function getRecipes(){
     axios.get(`${serverUrl}/recipes`).then(res=>{
@@ -238,7 +284,36 @@ function loadRecipes(receptekLista){
         accordion_div.appendChild(calory_div)
         // kalória vége
 
+        //kategoria
+        category_div = document.createElement("div")
+        category_div.classList.add("accordion-item")
 
+        category_h2 = document.createElement("h2")
+        category_h2.classList.add("accordion-header")
+
+        category_btn = document.createElement("button")
+        category_btn.classList.add("accordion-button", "collapsed")
+        category_btn.setAttribute("data-bs-target", `#${recipe.ID}-category`)
+        category_btn.setAttribute("data-bs-toggle", `collapse`)
+        category_btn.setAttribute("type", `button`)
+        category_btn.innerHTML = "Kategória"
+
+        category_h2.appendChild(calory_btn)
+        category_div.appendChild(calory_h2)
+
+        category_szoveg_div = document.createElement("div")
+        category_szoveg_div.classList.add("accordion-collapse","collapse")
+        category_szoveg_div.setAttribute("id", `${recipe.ID}-category`)
+
+        category_szoveg = document.createElement("div")
+        category_szoveg.classList.add("accordion-body")
+        category_szoveg.innerHTML = recipe.category
+        
+        category_szoveg_div.appendChild(category_szoveg)
+        category_div.appendChild(category_szoveg_div)
+
+        accordion_div.appendChild(category_div)
+        //kategoria vege
 
 
 
