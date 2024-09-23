@@ -109,7 +109,6 @@ function loadRecipes(){
     receptek.innerHTML = ""
     
     recipes.forEach(recipe => {
-        console.log(recipe)
         let card_div = document.createElement("div")
         card_div.classList.add("card")
 
@@ -131,6 +130,7 @@ function loadRecipes(){
         accordion_div = document.createElement("div")
         accordion_div.classList.add("accordion")
         
+        // hozzávalók
         hozzavalok_div = document.createElement("div")
         hozzavalok_div.classList.add("accordion-item")
 
@@ -138,7 +138,7 @@ function loadRecipes(){
         hozzavalok_h2.classList.add("accordion-header")
 
         hozzavalok_btn = document.createElement("button")
-        hozzavalok_btn.classList.add("accordion-button")
+        hozzavalok_btn.classList.add("accordion-button", "collapsed")
         hozzavalok_btn.setAttribute("data-bs-target", `#${recipe.ID}-hozzavalok`)
         hozzavalok_btn.setAttribute("data-bs-toggle", `collapse`)
         hozzavalok_btn.setAttribute("type", `button`)
@@ -159,6 +159,70 @@ function loadRecipes(){
         hozzavalok_div.appendChild(hozzavalok_szoveg_div)
 
         accordion_div.appendChild(hozzavalok_div)
+        // hozzávalók vége
+
+        // idő
+        ido_div = document.createElement("div")
+        ido_div.classList.add("accordion-item")
+
+        ido_h2 = document.createElement("h2")
+        ido_h2.classList.add("accordion-header")
+
+        ido_btn = document.createElement("button")
+        ido_btn.classList.add("accordion-button", "collapsed")
+        ido_btn.setAttribute("data-bs-target", `#${recipe.ID}-ido`)
+        ido_btn.setAttribute("data-bs-toggle", `collapse`)
+        ido_btn.setAttribute("type", `button`)
+        ido_btn.innerHTML = "Elkészítési idő"
+
+        ido_h2.appendChild(ido_btn)
+        ido_div.appendChild(ido_h2)
+
+        ido_szoveg_div = document.createElement("div")
+        ido_szoveg_div.classList.add("accordion-collapse","collapse")
+        ido_szoveg_div.setAttribute("id", `${recipe.ID}-ido`)
+
+        ido_szoveg = document.createElement("div")
+        ido_szoveg.classList.add("accordion-body")
+        ido_szoveg.innerHTML = recipe.time
+        
+        ido_szoveg_div.appendChild(ido_szoveg)
+        ido_div.appendChild(ido_szoveg_div)
+
+        accordion_div.appendChild(ido_div)
+        // idő vége
+
+        // kalória
+        calory_div = document.createElement("div")
+        calory_div.classList.add("accordion-item")
+
+        calory_h2 = document.createElement("h2")
+        calory_h2.classList.add("accordion-header")
+
+        calory_btn = document.createElement("button")
+        calory_btn.classList.add("accordion-button", "collapsed")
+        calory_btn.setAttribute("data-bs-target", `#${recipe.ID}-calory`)
+        calory_btn.setAttribute("data-bs-toggle", `collapse`)
+        calory_btn.setAttribute("type", `button`)
+        calory_btn.innerHTML = "Kalória"
+
+        calory_h2.appendChild(calory_btn)
+        calory_div.appendChild(calory_h2)
+
+        calory_szoveg_div = document.createElement("div")
+        calory_szoveg_div.classList.add("accordion-collapse","collapse")
+        calory_szoveg_div.setAttribute("id", `${recipe.ID}-calory`)
+
+        calory_szoveg = document.createElement("div")
+        calory_szoveg.classList.add("accordion-body")
+        calory_szoveg.innerHTML = recipe.calory
+        
+        calory_szoveg_div.appendChild(calory_szoveg)
+        calory_div.appendChild(calory_szoveg_div)
+
+        accordion_div.appendChild(calory_div)
+        // kalória vége
+
 
 
 

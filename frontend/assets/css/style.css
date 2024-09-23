@@ -38,3 +38,14 @@ footer{
     font-family: 'Roboto';
     font-weight: 300;
   }
+
+#receptek{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card{
+  width: 19rem;
+  margin: 5px;
+}

@@ -12,6 +12,7 @@ async function render(view){
             break;
         }
         case 'receptek':{
+            getRecipes()
             if (loggedUser==null) {
                 let plus = document.querySelector('#floating-button');
                 plus.style.visibility = "hidden";
