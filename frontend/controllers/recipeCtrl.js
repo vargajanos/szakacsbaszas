@@ -22,6 +22,8 @@ function addRecipe(){
             document.querySelector('#description').value = null
             document.querySelector('#time').value = null
             document.querySelector('#calory').value = null
+
+            getRecipes()
         }
     })
 }
@@ -71,7 +73,7 @@ function hozzaad(item){
     }
     else{
         selectedkategoriak.push(item)
-    }    
+    }
     kategoriadropdown();
 
 }
@@ -94,13 +96,16 @@ function kategoriadropdown(){
 function getRecipes(){
     axios.get(`${serverUrl}/recipes`).then(res=>{
         recipes = res.data
+        loadRecipes()
     })
 }
 
 function loadRecipes(){
-    let receptek = document.querySelector("receptek")
-
+    let receptek = document.querySelector("#receptek")
+    receptek.innerHTML = ""
+    
     recipes.forEach(recipe => {
+        console.log(recipe)
         let card_div = document.createElement("div")
         card_div.classList.add("card")
 
@@ -117,6 +122,7 @@ function loadRecipes(){
 
         card_body.appendChild(h5)
         card_body.appendChild(p)
+        card_div.appendChild(card_body)
 
         accordion_div = document.createElement("div")
         accordion_div.classList.add("accordion")
@@ -128,12 +134,41 @@ function loadRecipes(){
         hozzavalok_h2.classList.add("accordion-header")
 
         hozzavalok_btn = document.createElement("button")
-        hozzavalok_btn.classList("accordion-button")
+        hozzavalok_btn.classList.add("accordion-button")
+        hozzavalok_btn.setAttribute("data-bs-target", `#${recipe.ID}-hozzavalok`)
+        hozzavalok_btn.setAttribute("data-bs-toggle", `collapse`)
+        hozzavalok_btn.setAttribute("type", `button`)
         hozzavalok_btn.innerHTML = "Hozzávalók"
 
-        hozzavalok_liras = docment.createElement("div")
-        hozzavalok_liras.classList.add("accordion-collapse","collapse show")
-    });
-    
+        hozzavalok_h2.appendChild(hozzavalok_btn)
+        hozzavalok_div.appendChild(hozzavalok_h2)
 
+        hozzavalok_szoveg_div = document.createElement("div")
+        hozzavalok_szoveg_div.classList.add("accordion-collapse","collapse")
+        hozzavalok_szoveg_div.setAttribute("id", `${recipe.ID}-hozzavalok`)
+
+        hozzavalok_szoveg = document.createElement("div")
+        hozzavalok_szoveg.classList.add("accordion-body")
+        hozzavalok_szoveg.innerHTML = recipe.additions
+        
+        hozzavalok_szoveg_div.appendChild(hozzavalok_szoveg)
+        hozzavalok_div.appendChild(hozzavalok_szoveg_div)
+
+        accordion_div.appendChild(hozzavalok_div)
+
+
+
+
+        card_div.appendChild(accordion_div)
+        receptek.appendChild(card_div)
+
+        
+        
+        
+
+
+
+
+        
+    });
 }
