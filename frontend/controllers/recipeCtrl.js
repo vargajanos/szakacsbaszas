@@ -25,11 +25,10 @@ function addRecipe(){
             document.querySelector('#time').value = null
             document.querySelector('#calory').value = null
             document.querySelector('#selectedCategoryList').innerHTML = ""
-            selectedkategoriak = null
-
-            getRecipes()
+            selectedkategoriak.clear()
         }
     })
+    getRecipes()
 }
 
 
