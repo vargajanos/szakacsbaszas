@@ -11,6 +11,13 @@ async function render(view){
             getEn();
             break;
         }
+        case 'receptek':{
+            if (loggedUser==null) {
+                let plus = document.querySelector('#floating-button');
+                plus.style.visibility = "hidden";
+
+            }
+        }
         
     }
 
