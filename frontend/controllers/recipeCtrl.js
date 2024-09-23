@@ -19,16 +19,10 @@ function addRecipe(){
         alert(res.data);
         
         if(res.status == 200){
-            document.querySelector('#title').value = null
-            document.querySelector('#additions').value = null
-            document.querySelector('#description').value = null
-            document.querySelector('#time').value = null
-            document.querySelector('#calory').value = null
-            document.querySelector('#selectedCategoryList').innerHTML = ""
-            selectedkategoriak.clear()
+            clearModal()
+            getRecipes()
         }
-    })
-    getRecipes()
+    })    
 }
 
 function myFunction() {
@@ -238,20 +232,59 @@ function loadRecipes(receptekLista){
         accordion_div.appendChild(calory_div)
         // kalória vége
 
+        // módosít button
+        if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
+            edit_div = document.createElement("div")
+            edit_div.classList.add("accordion-item", "d-flex")
 
+            edit_btn = document.createElement("button")
+            edit_btn.classList.add("btn", "btn-primary", "m-2", "flex-fill")
+            edit_btn.innerHTML = "Módosít"
+            edit_btn.setAttribute("data-bs-target", "#exampleModal")
+            edit_btn.setAttribute("data-bs-toggle", "modal")
+            edit_btn.onclick = function() {editRecipe(recipe)}
 
+            edit_div.appendChild(edit_btn)
 
+            // töröl button
+            delete_btn = document.createElement("button")
+            delete_btn.classList.add("btn", "btn-danger", "m-2", "flex-fill")
+            delete_btn.innerHTML = "Törlés"
+            delete_btn.onclick = function() {deleteRecipe(recipe)}
+
+            edit_div.appendChild(delete_btn)
+            accordion_div.appendChild(edit_div)
+            // töröl button vége
+        }
+        // módosít button vége
 
         card_div.appendChild(accordion_div)
         receptek.appendChild(card_div)
-
-        
-        
-        
-
-
-
-
-        
     });
+}
+
+function editRecipe(recipe){
+    document.querySelector('#title').value = recipe.title
+    document.querySelector('#additions').value = recipe.additions
+    document.querySelector('#description').value = recipe.description
+    document.querySelector('#time').value = recipe.time
+    document.querySelector('#calory').value = recipe.calory
+    document.querySelector('#selectedCategoryList').innerHTML = ""
+
+    //recept módosítása
+}
+
+function deleteRecipe(recipe){
+    alert(`${recipe.title} recept törölve lesz`)
+    
+    // recept törlése
+}
+
+function clearModal(){
+    document.querySelector('#title').value = null
+    document.querySelector('#additions').value = null
+    document.querySelector('#description').value = null
+    document.querySelector('#time').value = null
+    document.querySelector('#calory').value = null
+    document.querySelector('#selectedCategoryList').innerHTML = ""
 }
