@@ -5,7 +5,7 @@ let loggedUser = null;
 async function render(view){
     let main = document.querySelector('main');
     main.innerHTML = await (await fetch(`views/${view}.html`)).text();
- 
+    
     switch(view){
         case 'en':{
             getEn();
@@ -15,24 +15,20 @@ async function render(view){
             if (loggedUser == null) {
                 let plus = document.querySelector('#floating-button');
                 plus.style.visibility = "hidden";
-
+                
             }
             getRecipes();
             katLekeres();
-        }
-        
+        }   
     }
-
-
 }
 
+render('receptek');
 
 if (localStorage.getItem('szakacs')){
     loggedUser = JSON.parse(localStorage.getItem('szakacs'));
-    render('receptek');
-}else{
-    render('login');
 }
+
 
 function renderNavItems(){
     let lgdOut = document.querySelectorAll('.lgdOut');
