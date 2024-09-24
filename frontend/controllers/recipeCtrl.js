@@ -47,15 +47,15 @@ function searchbar() {
 
 function katFelvetel(){
     let data ={
-        name:document.querySelector('#kat').value
+        name: document.querySelector('#kat').value
     }
 
     axios.post(`${serverUrl}/categorys`, data).then(res=>{
-
         alert(res.data)
+        if(res.status == 200){
+            document.querySelector('#kat').value = null
+        }
     })
-
-    katLekeres();
 }
 
 function katLekeres(){
@@ -87,7 +87,7 @@ function katFeltoltes(){
     
     let categoryList = document.querySelector('#categoryList')
     categoryList.innerHTML = "";
-
+    
     kategoriak.forEach(item => {
         let li = document.createElement('li')
         li.innerHTML = item.name
@@ -292,8 +292,8 @@ function loadRecipes(receptekLista){
         category_btn.setAttribute("type", `button`)
         category_btn.innerHTML = "Kategória"
 
-        category_h2.appendChild(calory_btn)
-        category_div.appendChild(calory_h2)
+        category_h2.appendChild(category_btn)
+        category_div.appendChild(category_h2)
 
         category_szoveg_div = document.createElement("div")
         category_szoveg_div.classList.add("accordion-collapse","collapse")
@@ -307,7 +307,9 @@ function loadRecipes(receptekLista){
         category_div.appendChild(category_szoveg_div)
 
         accordion_div.appendChild(category_div)
-        //kategoria vege        // módosít button
+        //kategoria vege       
+
+        // módosít button
         if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
             edit_div = document.createElement("div")
             edit_div.classList.add("accordion-item", "d-flex")
