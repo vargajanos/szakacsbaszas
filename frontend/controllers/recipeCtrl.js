@@ -3,6 +3,7 @@ let recipes = [];
 let kategoriak = [];
 let selectedkategoriak = [];
 let filterselectedkategoriak = [];
+let editrecipeid = ""
 
 function addRecipe(){
     let newRecipe={
@@ -334,7 +335,7 @@ function loadRecipe(recipe){
             edit_btn.innerHTML = "Módosít"
             edit_btn.setAttribute("data-bs-target", "#exampleModal")
             edit_btn.setAttribute("data-bs-toggle", "modal")
-            edit_btn.onclick = function() {editRecipe(recipe)}
+            edit_btn.onclick = function() {editRecipeLoad(recipe)}
 
             edit_div.appendChild(edit_btn)
 
@@ -356,7 +357,9 @@ function loadRecipe(recipe){
     
 }
 
-function editRecipe(recipe){
+function editRecipeLoad(recipe){
+    document.querySelector("#editRecipeBtn").classList.remove("d-none")
+    document.querySelector("#addRecipeBtn").classList.add("d-none")
     document.querySelector('#title').value = recipe.title
     document.querySelector('#additions').value = recipe.additions
     document.querySelector('#description').value = recipe.description
@@ -373,10 +376,14 @@ function editRecipe(recipe){
     
         fiam.appendChild(li)
     }) 
+    editrecipeid = recipe.ID
+    //recept módosítása
+}
 
+function editRecipe(){
     let data =
     {
-        ID: recipe.ID,
+        ID: editrecipeid,
         title: document.querySelector('#title').value,
         additions: document.querySelector('#additions').value,
         description: document.querySelector('#description').value,
@@ -384,15 +391,12 @@ function editRecipe(recipe){
         calory: document.querySelector('#calory').value,
         category: selectedkategoriak
     }
+    console.log(data)
 
     axios.patch(`${serverUrl}/recipe`, data).then(res=>{
         alert(res.data)
     })
-
-    document.querySelector("#editRecipeBtn").classList.remove("d-none")
-    document.querySelector("#addRecipeBtn").classList.add("d-none")
-
-    //recept módosítása
+    getRecipes()
 }
 
 function deleteRecipe(recipe){
@@ -411,5 +415,5 @@ function clearModal(){
 
     document.querySelector("#editRecipeBtn").classList.add("d-none")
     document.querySelector("#addRecipeBtn").classList.remove("d-none")
-    selectedkategoriak.clear();
+    selectedkategoriak = {};
 }

@@ -134,7 +134,7 @@ app.post('/recipe', (req, res)=>{
 app.patch('/recipe', (req, res)=>{
 
   
-  pool.query(`UPDATE recipes SET title='${req.body.title}', '${req.body.additions}', '${req.body.description}', '${req.body.time}', ${req.body.calory} WHERE ID='${req.body.ID}'`, (err,results)=>{
+  pool.query(`UPDATE recipes SET title='${req.body.title}', additions='${req.body.additions}', description='${req.body.description}', time='${req.body.time}', calory=${req.body.calory} WHERE ID='${req.body.ID}'`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatbázisban");
       return;
@@ -146,21 +146,22 @@ app.patch('/recipe', (req, res)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
-      }  
+      }
+
+      req.body.category.forEach(elem => {
+        pool.query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${req.body.ID}', '${elem.ID}')`, (err,results)=>{
+          if (err) {
+            res.status(500).send("Hiba van az adatbázisban");
+            return;
+          }
+          res.status(200).send("Sikeres módosítás");
+          return;
+        });
+      })
     })
 
 
     //kategoria felvetel
-    req.body.category.forEach(elem => {
-      pool.query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${req.body.ID}', '${elem.ID}')`, (err,results)=>{
-        if (err) {
-          res.status(500).send("Hiba van az adatbázisban");
-          return;
-        }
-          res.status(200).send("Sikeres módosítás"); 
-          return;
-      });
-    })
   })
 
 })
