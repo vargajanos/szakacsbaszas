@@ -155,8 +155,19 @@ function filterkategoriadropdown(){
 function getRecipes(){
     axios.get(`${serverUrl}/recipes`).then(res=>{
         recipes = res.data
-        loadRecipes(recipes)
-    })
+   
+    
+      recipes.forEach(item => {
+        axios.get(`${serverUrl}/recipes/${item.ID}`).then(res=>{
+              item.category = res.data
+          })
+      })
+    
+})
+    loadRecipes(recipes)
+    
+    
+
 }
 
 function loadRecipes(receptekLista){
@@ -276,6 +287,7 @@ function loadRecipes(receptekLista){
         calory_div.appendChild(calory_szoveg_div)
 
         accordion_div.appendChild(calory_div)
+
         // kalória vége
 
         //kategoria
@@ -292,22 +304,38 @@ function loadRecipes(receptekLista){
         category_btn.setAttribute("type", `button`)
         category_btn.innerHTML = "Kategória"
 
-        category_h2.appendChild(calory_btn)
-        category_div.appendChild(calory_h2)
+        category_h2.appendChild(category_btn)
+        category_div.appendChild(category_h2)
 
         category_szoveg_div = document.createElement("div")
         category_szoveg_div.classList.add("accordion-collapse","collapse")
         category_szoveg_div.setAttribute("id", `${recipe.ID}-category`)
 
-        category_szoveg = document.createElement("div")
-        category_szoveg.classList.add("accordion-body")
-        category_szoveg.innerHTML = recipe.category
+        category_szoveg = document.createElement("ul")
+        category_szoveg.classList.add("accordion-body", "list-group", "list-group-horizontal")
+
+        
+
+        recipe.category.forEach(i =>{
+            let li = document.createElement('li')
+            li.innerHTML = i.name
+            li.classList.add("list-group-item")   
+        
+            category_szoveg.appendChild(li)
+        })  
+        
+        
         
         category_szoveg_div.appendChild(category_szoveg)
         category_div.appendChild(category_szoveg_div)
 
         accordion_div.appendChild(category_div)
-        //kategoria vege        // módosít button
+
+
+        //kategoria vege        
+        
+        
+        // módosít button
         if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
             edit_div = document.createElement("div")
             edit_div.classList.add("accordion-item", "d-flex")
