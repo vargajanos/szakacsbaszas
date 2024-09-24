@@ -548,6 +548,9 @@ function editRecipe(recipe){
     document.querySelector('#calory').value = recipe.calory
     document.querySelector('#selectedCategoryList').innerHTML = ""
 
+    document.querySelector("#editRecipeBtn").classList.remove("d-none")
+    document.querySelector("#addRecipeBtn").classList.add("d-none")
+
     //recept módosítása
 }
 
@@ -564,4 +567,7 @@ function clearModal(){
     document.querySelector('#time').value = null
     document.querySelector('#calory').value = null
     document.querySelector('#selectedCategoryList').innerHTML = ""
+
+    document.querySelector("#editRecipeBtn").classList.add("d-none")
+    document.querySelector("#addRecipeBtn").classList.remove("d-none")
 }
