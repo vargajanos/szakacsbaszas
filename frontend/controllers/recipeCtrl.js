@@ -84,7 +84,6 @@ function katFeltoltes(){
 }
 
 function hozzaad(item){
-    console.log(selectedkategoriak.find((ize) => item.ID == ize.ID))
     if ((selectedkategoriak.find((ize) => item.ID == ize.ID)) != null) {
         selectedkategoriak.splice(selectedkategoriak.indexOf(selectedkategoriak.find((ize) => item.ID == ize.ID)),1)
     }
@@ -285,7 +284,7 @@ function loadRecipe(recipe){
         
         // módosít button
         if(loggedUser){
-            if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
+            if(loggedUser[0].status != 1 && recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
                 edit_div = document.createElement("div")
                 edit_div.classList.add("accordion-item", "d-flex")
     
@@ -353,7 +352,6 @@ function editRecipe(){
     }
     
     axios.patch(`${serverUrl}/recipe`, data).then(res=>{
-        alert(res.data)
         if(res.status == 200){
             getRecipes()
         }
@@ -369,8 +367,6 @@ function deleteRecipe(recipe){
             getRecipes();
         })
     }
-
-
     
     // recept törlése
 }
