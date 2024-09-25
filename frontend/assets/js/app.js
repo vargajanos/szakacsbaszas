@@ -28,6 +28,10 @@ async function render(view){
             kategoriaListLoad()
             break
         }
+        case 'statisztika':{
+            getStats();
+            break;
+        }   
     }
 }
 
