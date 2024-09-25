@@ -154,13 +154,11 @@ app.patch('/recipe', (req, res)=>{
             res.status(500).send("Hiba van az adatbázisban");
             return;
           }
-          res.status(200).send("Sikeres módosítás");
-          return;
         });
       })
+      res.status(200).send("Sikeres módosítás");
+      return;
     })
-
-
     //kategoria felvetel
   })
 
