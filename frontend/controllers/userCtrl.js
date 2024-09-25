@@ -106,7 +106,6 @@ function renderUsers(users){
 
     users.forEach(user => {
         let tr = document.createElement('tr');
-        let td1 = document.createElement('td');
         let td2 = document.createElement('td');
         let td3 = document.createElement('td');
         let td4 = document.createElement('td');
@@ -114,7 +113,6 @@ function renderUsers(users){
         let td6 = document.createElement('td');
         let td7 = document.createElement('td');
         
-        td1.innerHTML = '#';
         td2.innerHTML = user.name;
         td3.innerHTML = user.email;
         td4.innerHTML = user.phone;
@@ -135,7 +133,6 @@ function renderUsers(users){
 
         }
 
-        tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
