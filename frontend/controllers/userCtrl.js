@@ -50,7 +50,7 @@ function logout(){
 
 function getEn(){
 
-    axios.get(`${serverUrl}/me/${loggedUser[0].ID}`).then(res=>{
+    axios.get(`${serverUrl}/me/${loggedUser[0].ID}`, authorize()).then(res=>{
         document.querySelector('#name').value = res.data[0].name;
         document.querySelector('#email').value = res.data[0].email;
         document.querySelector('#phone').value = res.data[0].phone;
@@ -65,14 +65,14 @@ function updateEn(){
         phone: document.querySelector('#phone').value,
         role: document.querySelector('#role').value,
     }
-    axios.patch(`${serverUrl}/users/${loggedUser[0].ID}`, data).then(res=>{
+    axios.patch(`${serverUrl}/users/${loggedUser[0].ID}`, data, authorize()).then(res=>{
         alert(res.data)
     });
 }
 
 
 function getUsers(){
-    axios.get(`${serverUrl}/users`).then(res => {
+    axios.get(`${serverUrl}/users`, authorize()).then(res => {
         renderUsers(res.data);
     });
 }
@@ -82,7 +82,7 @@ function updateUser(){
         role: document.querySelector('#role').value,
         status: document.querySelector('#status').value
     }
-    axios.patch(`${serverUrl}/users/${edituserID}`, data).then(res => {
+    axios.patch(`${serverUrl}/users/${edituserID}`, data, authorize()).then(res => {
         alert(res.data);
         getUsers();
     });

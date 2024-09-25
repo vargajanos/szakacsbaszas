@@ -16,7 +16,7 @@ function addRecipe(){
     }
    
     
-    axios.post(`${serverUrl}/recipe`, newRecipe).then(res=>{
+    axios.post(`${serverUrl}/recipe`, newRecipe, authorize()).then(res=>{
         alert(res.data);
         
         if(res.status == 200){
@@ -50,7 +50,7 @@ function katFelvetel(){
         name: document.querySelector('#kat').value
     }
 
-    axios.post(`${serverUrl}/categorys`, data).then(res=>{
+    axios.post(`${serverUrl}/categorys`, data, authorize()).then(res=>{
         alert(res.data)
         if(res.status == 200){
             document.querySelector('#kat').value = null
@@ -128,7 +128,6 @@ function getRecipes(){
 
 function loadRecipe(recipe){
     let receptek = document.querySelector("#receptek")
-    // receptek.innerHTML = ""
     
     let card_div = document.createElement("div")
         card_div.classList.add("card")
@@ -351,7 +350,7 @@ function editRecipe(){
         category: selectedkategoriak
     }
     
-    axios.patch(`${serverUrl}/recipe`, data).then(res=>{
+    axios.patch(`${serverUrl}/recipe`, data, authorize()).then(res=>{
         if(res.status == 200){
             getRecipes()
         }
@@ -361,7 +360,7 @@ function editRecipe(){
 function deleteRecipe(recipe){
 
     if (confirm("Biztos törölni akarod?")) {
-        axios.delete(`${serverUrl}/recipe/${recipe.ID}`).then(res=>{
+        axios.delete(`${serverUrl}/recipe/${recipe.ID}`, authorize()).then(res=>{
             alert(res.data)
 
             getRecipes();

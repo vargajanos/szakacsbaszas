@@ -96,7 +96,7 @@ app.post('/login', (req, res)=>{
 })
 
 // recept felvétele
-app.post('/recipe', (req, res)=>{
+app.post('/recipe', logincheck, (req, res)=>{
 
   // szükséges értékek vizsgálata
   if (!req.body.title || !req.body.userID || !req.body.additions || !req.body.description || !req.body.time || !req.body.calory || req.body.category.length == 0) {
@@ -131,7 +131,7 @@ app.post('/recipe', (req, res)=>{
 })
 
 //recept modositasa
-app.patch('/recipe', (req, res)=>{
+app.patch('/recipe', logincheck, (req, res)=>{
 
   
   pool.query(`UPDATE recipes SET title='${req.body.title}', additions='${req.body.additions}', description='${req.body.description}', time='${req.body.time}', calory=${req.body.calory} WHERE ID='${req.body.ID}'`, (err,results)=>{
@@ -165,7 +165,7 @@ app.patch('/recipe', (req, res)=>{
 })
 
 //users lekérdezése
-app.get('/users', (req, res) => {
+app.get('/users', admincheck, (req, res) => {
 
   pool.query(`SELECT ID, name, email, role, status, phone FROM users`, (err, results) => {
     if (err){
@@ -178,7 +178,7 @@ app.get('/users', (req, res) => {
 });
 
 // user módosítása
-app.patch('/users/:id', (req, res) => {
+app.patch('/users/:id', admincheck, (req, res) => {
   
   if (!req.params.id) {
     res.status(203).send('Hiányzó azonosító!');
@@ -231,7 +231,7 @@ app.get('/recipes/:id', (req,res)=>{
   })
 })
 
-app.delete('/recipe/:id', (req,res)=>{
+app.delete('/recipe/:id', logincheck, (req,res)=>{
 
   if (!req.params.id) {
     res.status(203).send('Hiányzó azonosító!');
@@ -259,7 +259,7 @@ app.delete('/recipe/:id', (req,res)=>{
 })
 
 //Én lekérdezése
-app.get('/me/:id', (req,res)=>{
+app.get('/me/:id', logincheck, (req,res)=>{
   //vizsgálat
   if (!req.params.id) {
     res.status(203).send("Hiányzó azonosító");
@@ -282,7 +282,7 @@ app.get('/me/:id', (req,res)=>{
 })
 
 //Én módosítása
-app.patch('/users/:id', (req,res)=>{
+app.patch('/users/:id', logincheck, (req,res)=>{
 
   //vizsgálatok
   if (!req.params.id) {
@@ -313,7 +313,7 @@ app.patch('/users/:id', (req,res)=>{
 
 
 //kategoria felvetel
-app.post('/categorys', (req, res)=>{
+app.post('/categorys', admincheck, (req, res)=>{
   //szükséges érték vizsgálat
   if (!req.body.name) {
     res.status(203).send("Hiányzó adatok");
@@ -337,7 +337,7 @@ app.post('/categorys', (req, res)=>{
 })
 
 //kategoria lekeres
-app.get('/categorys', (req,res)=>{
+app.get('/categorys',  (req,res)=>{
 
   pool.query(`SELECT * FROM categorys`, (err,results)=>{
     if (err) {
@@ -351,7 +351,7 @@ app.get('/categorys', (req,res)=>{
   })
 })
 
-app.get("/mostCommonUser", (req,res)=>{
+app.get("/mostCommonUser", logincheck, (req,res)=>{
   pool.query(`SELECT name FROM recipes_vt GROUP BY userID ORDER BY COUNT(*) DESC LIMIT 1;`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatabázisban");
@@ -362,6 +362,58 @@ app.get("/mostCommonUser", (req,res)=>{
     return;
   })
 })
+
+// MIDDLEWARE functions
+
+// bejelentkezés ellenőrzése
+function logincheck(req, res, next) {
+  let token = req.header('Authorization');
+
+  if (!token) {
+    res.status(400).send("Lépj má be")
+    return;
+  }
+
+  pool.query(`SELECT * FROM users WHERE ID='${token}'`, (err,results)=>{
+    if (results.length == 0) {
+      res.status(400).send("Hibás belépés");
+      return;
+    }
+
+    next();
+  })
+
+  return;
+
+}
+
+// jogosultás ellenőrzése
+function admincheck(req, res, next) {
+  
+  let token = req.header('Authorization');
+
+  if (!token) {
+    res.status(400).send("Lépj má be")
+    return;
+  }
+
+  pool.query(`SELECT role FROM users WHERE ID='${token}'`, (err,results)=>{
+    if (results.length == 0) {
+      res.status(400).send("Hibás authentikáció");
+      return;
+    }
+    if (results[0].role != "admin") {
+      res.status(400).send("Nincs jogod bolond");
+      return;
+    }
+    next();
+  })
+
+  return;
+
+
+}
+
 
 app.listen(port, () => {
   //console.log(process.env) ;

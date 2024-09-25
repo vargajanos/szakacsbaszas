@@ -2,7 +2,7 @@ let recipe = []
 let mostCommonUser = "";
 
 function getStats(){
-    axios.get(`${serverUrl}/mostCommonUser`).then(res => {
+    axios.get(`${serverUrl}/mostCommonUser`, authorize()).then(res => {
         mostCommonUser = res.data;
 
     axios.get(`${serverUrl}/recipes`).then(res=>{
