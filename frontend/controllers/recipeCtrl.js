@@ -284,7 +284,7 @@ function loadRecipe(recipe){
         
         // módosít button
         if(loggedUser){
-            if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
+            if(loggedUser[0].status != 1 && recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
                 edit_div = document.createElement("div")
                 edit_div.classList.add("accordion-item", "d-flex")
     

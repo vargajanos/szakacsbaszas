@@ -12,10 +12,9 @@ async function render(view){
             break;
         }
         case 'receptek':{
-            if (loggedUser == null) {
+            if (!loggedUser || loggedUser[0].status == 1) {
                 let plus = document.querySelector('#floating-button');
-                plus.style.visibility = "hidden";
-                
+                plus.style.visibility = "hidden";   
             }
             getRecipes();
             katLekeres();
