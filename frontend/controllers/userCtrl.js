@@ -83,7 +83,7 @@ function updateUser(){
         status: document.querySelector('#status').value
     }
     axios.patch(`${serverUrl}/usersadm/${edituserID}`, data, authorize()).then(res => {
-        alert(res.data);
+        
         getUsers();
     });
 }

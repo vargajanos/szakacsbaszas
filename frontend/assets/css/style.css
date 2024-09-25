@@ -49,6 +49,8 @@ footer{
 .card{
   width: 19rem;
   margin: 5px;
+  background-color: #393057;
+  border-color: #eee;
 }
 
 
@@ -59,6 +61,7 @@ footer{
   padding: 12px 20px 12px 40px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
   margin-bottom: 12px; /* Add some space below the input */
+  border-radius: 5px;
 }
 
 #myUL {
@@ -85,4 +88,16 @@ footer{
 
 .d-none{
   display: none;
+}
+
+body{
+  background-color: #005070;
+}
+
+.nav-link{
+  color: #fff;
+}
+
+#katadd{
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
 }

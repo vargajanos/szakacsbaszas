@@ -202,7 +202,7 @@ function loadRecipe(recipe){
 
         ido_szoveg = document.createElement("div")
         ido_szoveg.classList.add("accordion-body")
-        ido_szoveg.innerHTML = recipe.time
+        ido_szoveg.innerHTML = recipe.time + " idő"
         
         ido_szoveg_div.appendChild(ido_szoveg)
         ido_div.appendChild(ido_szoveg_div)
@@ -233,7 +233,7 @@ function loadRecipe(recipe){
 
         calory_szoveg = document.createElement("div")
         calory_szoveg.classList.add("accordion-body")
-        calory_szoveg.innerHTML = recipe.calory
+        calory_szoveg.innerHTML = recipe.calory + " kalória"
         
         calory_szoveg_div.appendChild(calory_szoveg)
         calory_div.appendChild(calory_szoveg_div)
