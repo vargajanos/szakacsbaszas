@@ -3,6 +3,7 @@ let recipes = [];
 let kategoriak = [];
 let selectedkategoriak = [];
 let editrecipeid = ""
+let editkatid = ""
 
 function addRecipe(){
     let newRecipe={
@@ -58,22 +59,15 @@ function katFelvetel(){
     })
 }
 
-function katLekeres(){
+function katFeltoltes(){
 
     axios.get(`${serverUrl}/categorys`).then(res=>{
         kategoriak = res.data;
-        katFeltoltes()
-    })
+       
+        let categoryList = document.querySelector('#categoryList')
+        categoryList.innerHTML = "";
     
-}
-
-
-function katFeltoltes(){
-    
-    let categoryList = document.querySelector('#categoryList')
-    categoryList.innerHTML = "";
-    
-    kategoriak.forEach(item => {
+        kategoriak.forEach(item => {
         let li = document.createElement('li')
         li.innerHTML = item.name
         li.classList.add("dropdown-item")    
@@ -81,6 +75,10 @@ function katFeltoltes(){
 
         categoryList.appendChild(li)
     });
+    })
+    
+    
+    
 }
 
 function hozzaad(item){
@@ -382,4 +380,57 @@ function clearModal(){
     document.querySelector("#editRecipeBtn").classList.add("d-none")
     document.querySelector("#addRecipeBtn").classList.remove("d-none")
     selectedkategoriak = [];
+}
+
+function kategoriaListLoad(){
+    axios.get(`${serverUrl}/categorys`).then(res=>{
+        kategoriak = res.data;
+        
+        let tbody = document.querySelector('tbody');
+        tbody.innerHTML = '';
+
+        kategoriak.forEach(kategoria => {
+            let tr = document.createElement('tr');
+            let td1 = document.createElement('td');
+            let td2 = document.createElement('td');
+            
+            td1.innerHTML = kategoria.name;            
+            
+            let btn1 = document.createElement('button');
+
+            btn1.innerHTML = 'Módosítás';
+            btn1.classList.add('btn','btn-warning', 'btn-sm', 'me-2');
+            btn1.setAttribute("data-bs-target", "#kategoriaModal")
+            btn1.setAttribute("data-bs-toggle", "modal")
+            btn1.onclick = function() {updateCatLoad(kategoria)}
+
+            td2.classList.add("text-end")
+            td2.appendChild(btn1);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+
+            tbody.appendChild(tr);
+        });
+
+        let total = document.querySelector('strong');
+        total.innerHTML = kategoriak.length;
+    })
+}
+
+function updateCatLoad(kategoria){
+    document.querySelector("#name").value = kategoria.name
+    editkatid = kategoria.ID
+}
+
+function updateCat(){
+    let data = {
+        name: document.querySelector("#name").value
+    }
+    
+    axios.patch(`${serverUrl}/category/${editkatid}`, data).then(res=>{
+        if(res.status == 200){
+            kategoriaListLoad()
+        }
+    })
 }

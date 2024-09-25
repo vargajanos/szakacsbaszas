@@ -6,3 +6,51 @@
 </div>
 
 <button class="btn btn-primary mb-3" onclick="katFelvetel()">Felvétel</button>
+
+<div class="p-3">
+    <h3>Kategóriák</h3>
+    <hr>
+    
+    <table class="table table-striped table-hovered">
+        <thead>
+            <tr>
+                <th>Kategória neve</th>
+                <th class="text-end">Műveletek</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Összesen: <strong>0</strong> kategória</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade " id="kategoriaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Kategória módosítása</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="Kategória neve">
+            <label for="name">Kategória neve</label>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+          <button type="button" id="editRecipeBtn" class="btn btn-primary" data-bs-dismiss="modal" onclick="updateCat()">Módosítás</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
