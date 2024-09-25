@@ -192,12 +192,34 @@ app.get('/recipes/:id', (req,res)=>{
     res.status(202).send(results);
     return;
   })
+})
 
+app.delete('/recipe/:id', (req,res)=>{
+
+  if (!req.params.id) {
+    res.status(203).send('Hiányzó azonosító!');
+    return;
+  }
+
+  pool.query(`DELETE FROM recipes WHERE ID='${req.params.id}'`, (err,results)=>{
+    if (err){
+      res.status(500).send('Hiba történt az adatbázis művelet közben!');
+      return;
+    }
+
+    if (results.affectedRows == 0){
+      res.status(203).send('Nincs ilyen adat!');
+      return;
+    }
+
+    res.status(200).send('Sikeres recept törlés');
+    return;
+
+
+  })
 
 
 })
-
-
 
 //Én lekérdezése
 app.get('/me/:id', (req,res)=>{

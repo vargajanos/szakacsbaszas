@@ -2,7 +2,6 @@ let recipes = [];
 
 let kategoriak = [];
 let selectedkategoriak = [];
-let filterselectedkategoriak = [];
 let editrecipeid = ""
 
 function addRecipe(){
@@ -64,25 +63,10 @@ function katLekeres(){
     axios.get(`${serverUrl}/categorys`).then(res=>{
         kategoriak = res.data;
         katFeltoltes()
-        katFilter()
     })
     
 }
 
-function katFilter(){
-    let filterCategoryList = document.querySelector('#filterCategoryList')
-    filterCategoryList.innerHTML = "";
-
-    kategoriak.forEach(item => {
-        let li = document.createElement('li')
-        li.innerHTML = item.name
-        li.classList.add("dropdown-item")    
-        li.onclick = function () {filterhozzaad(item)};
-        filterCategoryList.appendChild(li)
-    });
-
-
-}
 
 function katFeltoltes(){
     
@@ -110,17 +94,7 @@ function hozzaad(item){
     kategoriadropdown();
 
 }
-function filterhozzaad(item){
 
-    if ((filterselectedkategoriak.find((ize) => item.ID == ize.ID)) != null) {
-        filterselectedkategoriak.splice(filterselectedkategoriak.indexOf(filterselectedkategoriak.find((ize) => item.ID == ize.ID)),1)
-    }
-    else{
-        filterselectedkategoriak.push(item)
-    }
-    filterkategoriadropdown();
-
-}
 function kategoriadropdown(){
 
 
@@ -136,22 +110,6 @@ function kategoriadropdown(){
     })  
 
 }
-function filterkategoriadropdown(){
-
-
-    let filterSelectedCategoryList = document.querySelector('#filterSelectedCategoryList');
-    filterSelectedCategoryList.innerHTML = "";
-
-    filterselectedkategoriak.forEach(i =>{
-        let li = document.createElement('li')
-        li.innerHTML = i.name
-        li.classList.add("list-group-item")   
-    
-        filterSelectedCategoryList.appendChild(li)
-    })  
-
-}
-
 
 function getRecipes(){
     axios.get(`${serverUrl}/recipes`).then(res=>{
@@ -326,6 +284,7 @@ function loadRecipe(recipe){
         //kategoria vege       
         
         // módosít button
+        
         if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
             edit_div = document.createElement("div")
             edit_div.classList.add("accordion-item", "d-flex")
@@ -395,12 +354,22 @@ function editRecipe(){
 
     axios.patch(`${serverUrl}/recipe`, data).then(res=>{
         alert(res.data)
+        getRecipes()
     })
-    getRecipes()
+
 }
 
 function deleteRecipe(recipe){
-    alert(`${recipe.title} recept törölve lesz`)
+
+    if (confirm("Biztos törölni akarod?")) {
+        axios.delete(`${serverUrl}/recipe/${recipe.ID}`).then(res=>{
+            alert(res.data)
+
+            getRecipes();
+        })
+    }
+
+
     
     // recept törlése
 }
@@ -415,5 +384,5 @@ function clearModal(){
 
     document.querySelector("#editRecipeBtn").classList.add("d-none")
     document.querySelector("#addRecipeBtn").classList.remove("d-none")
-    selectedkategoriak = {};
+    selectedkategoriak = [];
 }
