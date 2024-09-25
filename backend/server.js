@@ -164,6 +164,43 @@ app.patch('/recipe', (req, res)=>{
 
 })
 
+//users lekérdezése
+app.get('/users', (req, res) => {
+
+  pool.query(`SELECT ID, name, email, role, status, phone FROM users`, (err, results) => {
+    if (err){
+      res.status(500).send('Hiba történt az adatbázis lekérés közben!');
+      return;
+    }
+    res.status(200).send(results);
+    return;
+  });
+});
+
+// user módosítása
+app.patch('/users/:id', (req, res) => {
+  
+  if (!req.params.id) {
+    res.status(203).send('Hiányzó azonosító!');
+    return;
+  }
+
+  pool.query(`UPDATE users SET role='${req.body.role}', status = ${req.body.status} WHERE ID='${req.params.id}'`, (err, results) => {
+    if (err){
+      res.status(500).send('Hiba történt az adatbázis lekérés közben!');
+      return;
+    }
+
+    if (results.affectedRows == 0){
+      res.status(203).send('Hibás azonosító!');
+      return;
+    }
+
+    res.status(200).send('Felhasználó adatok módosítva!');
+    return;
+  });
+});
+
 
 //recept lekérdezése
 app.get('/recipes', (req,res)=>{

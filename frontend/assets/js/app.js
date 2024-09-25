@@ -18,7 +18,11 @@ async function render(view){
                 
             }
             getRecipes();
-            katLekeres();
+            break;   
+        }
+        case 'felhasznalok':{
+            getUsers();
+            break;
         }   
     }
 }

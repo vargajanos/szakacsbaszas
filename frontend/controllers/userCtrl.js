@@ -1,3 +1,5 @@
+let edituserID = "";
+
 function login(){
     let user={
         email: document.querySelector('#email').value,
@@ -68,3 +70,82 @@ function updateEn(){
     });
 }
 
+
+function getUsers(){
+    axios.get(`${serverUrl}/users`).then(res => {
+        renderUsers(res.data);
+    });
+}
+
+function updateUser(){
+    let data = {
+        role: document.querySelector('#role').value,
+        status: document.querySelector('#status').value
+    }
+    axios.patch(`${serverUrl}/users/${edituserID}`, data).then(res => {
+        alert(res.data);
+        getUsers();
+    });
+}
+
+function updateUserLoad(user){
+    document.querySelector('#name').value = user.name
+    document.querySelector('#email').value = user.email
+    document.querySelector('#phone').value = user.phone
+    document.querySelector('#role').value = user.role
+    document.querySelector('#status').value = user.status
+
+
+    edituserID = user.ID;
+}
+
+
+function renderUsers(users){
+    let tbody = document.querySelector('tbody');
+    tbody.innerHTML = '';
+
+    users.forEach(user => {
+        let tr = document.createElement('tr');
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+        let td4 = document.createElement('td');
+        let td5 = document.createElement('td');
+        let td6 = document.createElement('td');
+        let td7 = document.createElement('td');
+        
+        td1.innerHTML = '#';
+        td2.innerHTML = user.name;
+        td3.innerHTML = user.email;
+        td4.innerHTML = user.phone;
+        td5.innerHTML = user.role;
+        td6.innerHTML = user.status;
+        
+        if (user.ID != loggedUser[0].ID){
+            let btn1 = document.createElement('button');
+
+
+            btn1.innerHTML = 'Edit';
+            btn1.classList.add('btn','btn-warning', 'btn-sm', 'me-2');
+            btn1.setAttribute("data-bs-target", "#userModal")
+            btn1.setAttribute("data-bs-toggle", "modal")
+            btn1.onclick = function() {updateUserLoad(user)}
+
+            td7.appendChild(btn1);
+
+        }
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        tr.appendChild(td6);
+        tr.appendChild(td7);
+
+        tbody.appendChild(tr);
+    });
+
+    let total = document.querySelector('strong');
+    total.innerHTML = users.length;
+}
