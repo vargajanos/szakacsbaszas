@@ -123,7 +123,7 @@ function renderUsers(users){
             let btn1 = document.createElement('button');
 
 
-            btn1.innerHTML = 'Edit';
+            btn1.innerHTML = 'Módostás';
             btn1.classList.add('btn','btn-warning', 'btn-sm', 'me-2');
             btn1.setAttribute("data-bs-target", "#userModal")
             btn1.setAttribute("data-bs-toggle", "modal")

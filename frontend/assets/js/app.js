@@ -17,11 +17,16 @@ async function render(view){
                 plus.style.visibility = "hidden";   
             }
             getRecipes();
+            katFeltoltes()
             break;   
         }
         case 'felhasznalok':{
             getUsers();
             break;
+        }
+        case "kategoria":{
+            kategoriaListLoad()
+            break
         }
         case 'statisztika':{
             getStats();

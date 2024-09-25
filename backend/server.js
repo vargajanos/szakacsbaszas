@@ -351,7 +351,8 @@ app.get('/categorys',  (req,res)=>{
   })
 })
 
-app.get("/mostCommonUser", logincheck, (req,res)=>{
+// legtöbb adatot rögzített felhasználó
+app.get("/mostCommonUser", (req,res)=>{
   pool.query(`SELECT name FROM recipes_vt GROUP BY userID ORDER BY COUNT(*) DESC LIMIT 1;`, (err,results)=>{
     if (err) {
       res.status(500).send("Hiba van az adatabázisban");
@@ -360,6 +361,31 @@ app.get("/mostCommonUser", logincheck, (req,res)=>{
 
     res.status(200).send(results);
     return;
+  })
+})
+
+// kategória frissítése
+app.patch('/category/:id', admincheck, (req,res)=>{
+
+  if (!req.params.id) {
+    res.status(203).send("Hiányzó azonosító");
+    return;
+  }
+
+  if (!req.body.name) {
+    res.status(203).send("Hiányzó adatok");
+    return;
+  }
+
+  pool.query(`UPDATE categorys SET name = "${req.body.name}" WHERE ID = "${req.params.id}"`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatabázisban");
+      return;
+    }
+
+    res.status(200).send(results);
+    return;
+
   })
 })
 
