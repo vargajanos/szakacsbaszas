@@ -82,7 +82,7 @@ function updateUser(){
         role: document.querySelector('#role').value,
         status: document.querySelector('#status').value
     }
-    axios.patch(`${serverUrl}/users/${edituserID}`, data, authorize()).then(res => {
+    axios.patch(`${serverUrl}/usersadm/${edituserID}`, data, authorize()).then(res => {
         alert(res.data);
         getUsers();
     });

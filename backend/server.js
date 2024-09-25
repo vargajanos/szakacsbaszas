@@ -178,7 +178,7 @@ app.get('/users', admincheck, (req, res) => {
 });
 
 // user módosítása
-app.patch('/users/:id', admincheck, (req, res) => {
+app.patch('/usersadm/:id', admincheck, (req, res) => {
   
   if (!req.params.id) {
     res.status(203).send('Hiányzó azonosító!');
