@@ -84,7 +84,6 @@ function katFeltoltes(){
 }
 
 function hozzaad(item){
-    console.log(selectedkategoriak.find((ize) => item.ID == ize.ID))
     if ((selectedkategoriak.find((ize) => item.ID == ize.ID)) != null) {
         selectedkategoriak.splice(selectedkategoriak.indexOf(selectedkategoriak.find((ize) => item.ID == ize.ID)),1)
     }
@@ -353,7 +352,6 @@ function editRecipe(){
     }
     
     axios.patch(`${serverUrl}/recipe`, data).then(res=>{
-        alert(res.data)
         if(res.status == 200){
             getRecipes()
         }
@@ -369,8 +367,6 @@ function deleteRecipe(recipe){
             getRecipes();
         })
     }
-
-
     
     // recept törlése
 }
