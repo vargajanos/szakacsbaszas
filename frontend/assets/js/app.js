@@ -22,6 +22,10 @@ async function render(view){
         case 'felhasznalok':{
             getUsers();
             break;
+        }
+        case 'statisztika':{
+            getStats();
+            break;
         }   
     }
 }
