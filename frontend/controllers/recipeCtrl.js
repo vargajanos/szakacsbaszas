@@ -100,7 +100,7 @@ function katFeltoltes(){
 }
 
 function hozzaad(item){
-
+    console.log(selectedkategoriak.find((ize) => item.ID == ize.ID))
     if ((selectedkategoriak.find((ize) => item.ID == ize.ID)) != null) {
         selectedkategoriak.splice(selectedkategoriak.indexOf(selectedkategoriak.find((ize) => item.ID == ize.ID)),1)
     }
@@ -326,28 +326,30 @@ function loadRecipe(recipe){
         //kategoria vege       
         
         // módosít button
-        if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
-            edit_div = document.createElement("div")
-            edit_div.classList.add("accordion-item", "d-flex")
-
-            edit_btn = document.createElement("button")
-            edit_btn.classList.add("btn", "btn-primary", "m-2", "flex-fill")
-            edit_btn.innerHTML = "Módosít"
-            edit_btn.setAttribute("data-bs-target", "#exampleModal")
-            edit_btn.setAttribute("data-bs-toggle", "modal")
-            edit_btn.onclick = function() {editRecipeLoad(recipe)}
-
-            edit_div.appendChild(edit_btn)
-
-            // töröl button
-            delete_btn = document.createElement("button")
-            delete_btn.classList.add("btn", "btn-danger", "m-2", "flex-fill")
-            delete_btn.innerHTML = "Törlés"
-            delete_btn.onclick = function() {deleteRecipe(recipe)}
-
-            edit_div.appendChild(delete_btn)
-            accordion_div.appendChild(edit_div)
-            // töröl button vége
+        if(loggedUser){
+            if(recipe.userID == loggedUser[0].ID || loggedUser[0].role == "admin"){
+                edit_div = document.createElement("div")
+                edit_div.classList.add("accordion-item", "d-flex")
+    
+                edit_btn = document.createElement("button")
+                edit_btn.classList.add("btn", "btn-primary", "m-2", "flex-fill")
+                edit_btn.innerHTML = "Módosít"
+                edit_btn.setAttribute("data-bs-target", "#exampleModal")
+                edit_btn.setAttribute("data-bs-toggle", "modal")
+                edit_btn.onclick = function() {editRecipeLoad(recipe)}
+    
+                edit_div.appendChild(edit_btn)
+    
+                // töröl button
+                delete_btn = document.createElement("button")
+                delete_btn.classList.add("btn", "btn-danger", "m-2", "flex-fill")
+                delete_btn.innerHTML = "Törlés"
+                delete_btn.onclick = function() {deleteRecipe(recipe)}
+    
+                edit_div.appendChild(delete_btn)
+                accordion_div.appendChild(edit_div)
+                // töröl button vége
+            }
         }
         // módosít button vége
 
@@ -391,12 +393,13 @@ function editRecipe(){
         calory: document.querySelector('#calory').value,
         category: selectedkategoriak
     }
-    console.log(data)
-
+    
     axios.patch(`${serverUrl}/recipe`, data).then(res=>{
         alert(res.data)
+        if(res.status == 200){
+            getRecipes()
+        }
     })
-    getRecipes()
 }
 
 function deleteRecipe(recipe){
@@ -415,5 +418,5 @@ function clearModal(){
 
     document.querySelector("#editRecipeBtn").classList.add("d-none")
     document.querySelector("#addRecipeBtn").classList.remove("d-none")
-    selectedkategoriak = {};
+    selectedkategoriak = [];
 }
