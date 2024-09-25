@@ -351,6 +351,18 @@ app.get('/categorys', (req,res)=>{
   })
 })
 
+app.get("/mostCommonUser", (req,res)=>{
+  pool.query(`SELECT name FROM recipes_vt GROUP BY userID ORDER BY COUNT(*) DESC LIMIT 1;`, (err,results)=>{
+    if (err) {
+      res.status(500).send("Hiba van az adatabázisban");
+      return;
+    }
+
+    res.status(200).send(results);
+    return;
+  })
+})
+
 app.listen(port, () => {
   //console.log(process.env) ;
   console.log(`A masinéria megfigyel itten e: ${port}...`);
