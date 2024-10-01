@@ -31,8 +31,8 @@ function registration(){
     }
 
     axios.post(`${serverUrl}/reg`, newUser).then(res=>{
+        alert(res.data);
         if(res.status == 202){
-            alert(res.data);
             document.querySelector('#name').value = null
             document.querySelector('#email').value = null
             document.querySelector('#passwd').value = null
