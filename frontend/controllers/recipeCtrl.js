@@ -17,7 +17,7 @@ function addRecipe(){
     }
    
     
-    axios.post(`${serverUrl}/recipe`, newRecipe, authorize()).then(res=>{
+    axios.post(`${serverUrl}/recipes`, newRecipe, authorize()).then(res=>{
         alert(res.data);
         
         if(res.status == 200){
@@ -348,7 +348,7 @@ function editRecipe(){
         category: selectedkategoriak
     }
     
-    axios.patch(`${serverUrl}/recipe`, data, authorize()).then(res=>{
+    axios.patch(`${serverUrl}/recipes`, data, authorize()).then(res=>{
         if(res.status == 200){
             getRecipes()
         }
@@ -358,7 +358,7 @@ function editRecipe(){
 function deleteRecipe(recipe){
 
     if (confirm("Biztos törölni akarod?")) {
-        axios.delete(`${serverUrl}/recipe/${recipe.ID}`, authorize()).then(res=>{
+        axios.delete(`${serverUrl}/recipes/${recipe.ID}`, authorize()).then(res=>{
             alert(res.data)
 
             getRecipes();
@@ -427,7 +427,7 @@ function updateCat(){
         name: document.querySelector("#name").value
     }
     
-    axios.patch(`${serverUrl}/category/${editkatid}`, data, authorize()).then(res=>{
+    axios.patch(`${serverUrl}/categorys/${editkatid}`, data, authorize()).then(res=>{
         if(res.status == 200){
             kategoriaListLoad()
         }
