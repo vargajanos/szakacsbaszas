@@ -6,7 +6,7 @@ function login(){
         passwd: document.querySelector('#passwd').value
     }
 
-    axios.post(`${serverUrl}/login`, user).then(res=>{
+    axios.post(`${serverUrl}/users/login`, user).then(res=>{
 
         if (res.status != 202) {
             alert(res.data);
@@ -30,7 +30,7 @@ function registration(){
         phone: document.querySelector('#phone').value
     }
 
-    axios.post(`${serverUrl}/reg`, newUser).then(res=>{
+    axios.post(`${serverUrl}/users/reg`, newUser).then(res=>{
         alert(res.data);
         if(res.status == 202){
             document.querySelector('#name').value = null
@@ -50,7 +50,7 @@ function logout(){
 
 function getEn(){
 
-    axios.get(`${serverUrl}/me/${loggedUser[0].ID}`, authorize()).then(res=>{
+    axios.get(`${serverUrl}/users/me/${loggedUser[0].ID}`, authorize()).then(res=>{
         document.querySelector('#name').value = res.data[0].name;
         document.querySelector('#email').value = res.data[0].email;
         document.querySelector('#phone').value = res.data[0].phone;

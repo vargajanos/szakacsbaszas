@@ -51,7 +51,7 @@ function katFelvetel(){
         name: document.querySelector('#kat').value
     }
 
-    axios.post(`${serverUrl}/categorys`, data, authorize()).then(res=>{
+    axios.post(`${serverUrl}/category`, data, authorize()).then(res=>{
         alert(res.data)
         if(res.status == 200){
             document.querySelector('#kat').value = null
@@ -61,7 +61,7 @@ function katFelvetel(){
 
 function katFeltoltes(){
 
-    axios.get(`${serverUrl}/categorys`).then(res=>{
+    axios.get(`${serverUrl}/category`).then(res=>{
         kategoriak = res.data;
        
         let categoryList = document.querySelector('#categoryList')
@@ -109,13 +109,13 @@ function kategoriadropdown(){
 }
 
 function getRecipes(){
-    axios.get(`${serverUrl}/recipes`).then(res=>{
+    axios.get(`${serverUrl}/recipe`).then(res=>{
         recipes = res.data
         let receptek = document.querySelector("#receptek")
         receptek.innerHTML = ""
         
         recipes.forEach(item => {
-            axios.get(`${serverUrl}/recipes/${item.ID}`).then(res=>{
+            axios.get(`${serverUrl}/recipe/${item.ID}`).then(res=>{
                 item.category = res.data
                 loadRecipe(item)
             })
@@ -382,7 +382,7 @@ function clearModal(){
 }
 
 function kategoriaListLoad(){
-    axios.get(`${serverUrl}/categorys`).then(res=>{
+    axios.get(`${serverUrl}/category`).then(res=>{
         kategoriak = res.data;
         
         let tbody = document.querySelector('tbody');
