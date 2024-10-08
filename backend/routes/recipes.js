@@ -16,7 +16,7 @@ router.post('/', logincheck, (req, res)=>{
     let recipeID = uuid.v4();
   
     // felvétel
-    db.query(`INSERT INTO recipes VALUES ('${recipeID}', '${req.body.userID}', '${req.body.title}', '${req.body.additions}', '${req.body.description}', '${req.body.time}', ${req.body.calory})`, (err,results)=>{
+    db.Query(`INSERT INTO recipes VALUES ('${recipeID}', '${req.body.userID}', '${req.body.title}', '${req.body.additions}', '${req.body.description}', '${req.body.time}', ${req.body.calory})`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
@@ -24,7 +24,7 @@ router.post('/', logincheck, (req, res)=>{
   
       //kategoria felvetel
       req.body.category.forEach(elem => {
-        db.query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${recipeID}', '${elem.ID}')`, (err,results)=>{
+        db.Query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${recipeID}', '${elem.ID}')`, (err,results)=>{
           if (err) {
             res.status(500).send("Hiba van az adatbázisban");
             return;
@@ -44,7 +44,7 @@ router.post('/', logincheck, (req, res)=>{
   router.patch('/', logincheck, (req, res)=>{
   
     
-    db.query(`UPDATE recipes SET title='${req.body.title}', additions='${req.body.additions}', description='${req.body.description}', time='${req.body.time}', calory=${req.body.calory} WHERE ID='${req.body.ID}'`, (err,results)=>{
+    db.Query(`UPDATE recipes SET title='${req.body.title}', additions='${req.body.additions}', description='${req.body.description}', time='${req.body.time}', calory=${req.body.calory} WHERE ID='${req.body.ID}'`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
@@ -52,14 +52,14 @@ router.post('/', logincheck, (req, res)=>{
       
   
       //kategoria torles
-      db.query(`DELETE FROM cat_kapcs WHERE recipeID='${req.body.ID}'`, (err, results)=>{
+      db.Query(`DELETE FROM cat_kapcs WHERE recipeID='${req.body.ID}'`, (err, results)=>{
         if (err) {
           res.status(500).send("Hiba van az adatbázisban");
           return;
         }
   
         req.body.category.forEach(elem => {
-          db.query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${req.body.ID}', '${elem.ID}')`, (err,results)=>{
+          db.Query(`INSERT INTO cat_kapcs VALUES ('${uuid.v4()}', '${req.body.ID}', '${elem.ID}')`, (err,results)=>{
             if (err) {
               res.status(500).send("Hiba van az adatbázisban");
               return;
@@ -78,7 +78,7 @@ router.post('/', logincheck, (req, res)=>{
   router.get('/', (req,res)=>{
   
     //select
-    db.query(`SELECT * FROM recipes`, (err,results)=>{
+    db.Query(`SELECT * FROM recipes`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
@@ -92,7 +92,7 @@ router.post('/', logincheck, (req, res)=>{
   //egy recept milyen kategoria
   router.get('/:id', (req,res)=>{
   
-    db.query(`SELECT * from categorys WHERE ID IN (SELECT catID from cat_kapcs WHERE recipeID='${req.params.id}')`, (err, results)=>{
+    db.Query(`SELECT * from categorys WHERE ID IN (SELECT catID from cat_kapcs WHERE recipeID='${req.params.id}')`, (err, results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
@@ -110,7 +110,7 @@ router.post('/', logincheck, (req, res)=>{
       return;
     }
   
-    db.query(`DELETE FROM recipes WHERE ID='${req.params.id}'`, (err,results)=>{
+    db.Query(`DELETE FROM recipes WHERE ID='${req.params.id}'`, (err,results)=>{
       if (err){
         res.status(500).send('Hiba történt az adatbázis művelet közben!');
         return;
@@ -132,7 +132,7 @@ router.post('/', logincheck, (req, res)=>{
   
   // legtöbb adatot rögzített felhasználó
   router.get("/mostCommonUser", (req,res)=>{
-    db.query(`SELECT name FROM recipes_vt GROUP BY userID ORDER BY COUNT(*) DESC LIMIT 1;`, (err,results)=>{
+    db.Query(`SELECT name FROM recipes_vt GROUP BY userID ORDER BY COUNT(*) DESC LIMIT 1;`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatabázisban");
         return;

@@ -27,7 +27,7 @@ router.post("/reg", (req, res) => {
       return;
     }
   
-    db.query(`SELECT * FROM users WHERE email='${req.body.email}'`, (err, results) => {
+    db.Query(`SELECT * FROM users WHERE email='${req.body.email}'`, (err, results) => {
        
       if (err){
         res.status(500).send('Hiba történt az adatbázis elérése közben!');
@@ -41,7 +41,7 @@ router.post("/reg", (req, res) => {
       }
       
       // új felhasználó felvétele
-      db.query(`INSERT INTO users VALUES('${uuid.v4()}', '${req.body.name}', '${req.body.email}', SHA1('${req.body.passwd}'), 'user', '0', '${req.body.phone}')`, (err, results)=>{
+      db.Query(`INSERT INTO users VALUES('${uuid.v4()}', '${req.body.name}', '${req.body.email}', SHA1('${req.body.passwd}'), 'user', '0', '${req.body.phone}')`, (err, results)=>{
         if (err){
           res.status(500).send('Hiba történt az adatbázis művelet közben!');
           return;
@@ -62,7 +62,7 @@ router.post("/reg", (req, res) => {
       return;
     }
   
-    db.query(`SELECT ID, name, email, role, status, phone FROM users WHERE email='${req.body.email}' AND password='${CryptoJS.SHA1(req.body.passwd)}'`, (err,results)=>{
+    db.Query(`SELECT ID, name, email, role, status, phone FROM users WHERE email='${req.body.email}' AND password='${CryptoJS.SHA1(req.body.passwd)}'`, (err,results)=>{
   
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
@@ -83,7 +83,7 @@ router.post("/reg", (req, res) => {
 //users lekérdezése
 router.get('/', admincheck, (req, res) => {
 
-    db.query(`SELECT ID, name, email, role, status, phone FROM users`, (err, results) => {
+    db.Query(`SELECT ID, name, email, role, status, phone FROM users`, (err, results) => {
       if (err){
         res.status(500).send('Hiba történt az adatbázis lekérés közben!');
         return;
@@ -101,7 +101,7 @@ router.get('/', admincheck, (req, res) => {
       return;
     }
   
-    db.query(`UPDATE users SET role='${req.body.role}', status = ${req.body.status} WHERE ID='${req.params.id}'`, (err, results) => {
+    db.Query(`UPDATE users SET role='${req.body.role}', status = ${req.body.status} WHERE ID='${req.params.id}'`, (err, results) => {
       if (err){
         res.status(500).send('Hiba történt az adatbázis lekérés közben!');
         return;
@@ -126,7 +126,7 @@ router.get('/me/:id', logincheck, (req,res)=>{
       return;
     }
     //select
-    db.query(`SELECT name, email, role, phone FROM users WHERE ID='${req.params.id}'`, (err,results)=>{
+    db.Query(`SELECT name, email, role, phone FROM users WHERE ID='${req.params.id}'`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
@@ -155,7 +155,7 @@ router.get('/me/:id', logincheck, (req,res)=>{
       return;
     }
     //update
-    db.query(`UPDATE users SET name='${req.body.name}', email='${req.body.email}', role='${req.body.role}', phone='${req.body.phone}' WHERE ID='${req.params.id}'`, (err,results)=>{
+    db.Query(`UPDATE users SET name='${req.body.name}', email='${req.body.email}', role='${req.body.role}', phone='${req.body.phone}' WHERE ID='${req.params.id}'`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbáisban");
         return;

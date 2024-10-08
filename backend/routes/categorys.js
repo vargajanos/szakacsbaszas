@@ -13,7 +13,7 @@ router.post('/', admincheck, (req, res)=>{
     }
   
     //felvétel
-    db.query(`INSERT INTO categorys VALUES ('${uuid.v4()}', '${req.body.name}')`, (err,results)=>{
+    db.Query(`INSERT INTO categorys VALUES ('${uuid.v4()}', '${req.body.name}')`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatbázisban");
         return;
@@ -31,7 +31,7 @@ router.post('/', admincheck, (req, res)=>{
   //kategoriak lekerese
 router.get('/',  (req,res)=>{
   
-    db.query(`SELECT * FROM categorys`, (err,results)=>{
+    db.Query(`SELECT * FROM categorys`, (err,results)=>{
       if (err) {
         res.status(500).send("Hiba van az adatabázisban");
         return;
@@ -56,7 +56,7 @@ router.patch('/:id', admincheck, (req,res)=>{
           return;
         }
       
-        db.query(`UPDATE categorys SET name = "${req.body.name}" WHERE ID = "${req.params.id}"`, (err,results)=>{
+        db.Query(`UPDATE categorys SET name = "${req.body.name}" WHERE ID = "${req.params.id}"`, (err,results)=>{
           if (err) {
             res.status(500).send("Hiba van az adatabázisban");
             return;
