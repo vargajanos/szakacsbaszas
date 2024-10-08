@@ -11,7 +11,7 @@ function logincheck(req, res, next) {
       return;
     }
   
-    db.query(`SELECT * FROM users WHERE ID='${token}'`, (err,results)=>{
+    db.Query(`SELECT * FROM users WHERE ID='${token}'`, (err,results)=>{
       if (results.length == 0) {
         res.status(400).send("Hibás belépés");
         return;
@@ -34,7 +34,7 @@ function logincheck(req, res, next) {
       return;
     }
   
-    db.query(`SELECT role FROM users WHERE ID='${token}'`, (err,results)=>{
+    db.Query(`SELECT role FROM users WHERE ID='${token}'`, (err,results)=>{
       if (results.length == 0) {
         res.status(400).send("Hibás authentikáció");
         return;

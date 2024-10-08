@@ -11,10 +11,13 @@
   "author": "Jani és Csoki （￣︶￣）↗",
   "license": "ISC",
   "dependencies": {
+    "cli-color": "^2.0.4",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "fs": "^0.0.1-security",
+    "moment": "^2.30.1",
     "mysql": "^2.18.1",
     "uuid": "^10.0.0"
   },
